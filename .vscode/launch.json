@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HexagonalApplication",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.Hexagonal.HexagonalApplication",
+            "projectName": "Hexagonal",
+            "args": "",
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bTomcat started on port\\s+(\\d+)",
+                "uriFormat": "http://localhost:%s/"
+            }
+        }
+    ]
+}
