@@ -30,5 +30,12 @@ public class UsuarioEntity {
         return correo;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
 }

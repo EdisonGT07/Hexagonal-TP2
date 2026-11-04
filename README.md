@@ -2,6 +2,8 @@
 
 Aplicación de gestión de usuarios construida con Java 21 y Spring Boot. Sirve como ejemplo para estudiar dominio, casos de uso, puertos y adaptadores con una interfaz web Thymeleaf y persistencia H2/JPA.
 
+La interfaz permite crear, consultar, listar, editar y eliminar usuarios.
+
 ## Requisitos
 
 - JDK 21

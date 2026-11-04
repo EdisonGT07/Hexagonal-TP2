@@ -1,9 +1,16 @@
 package com.example.Hexagonal.Infrastructura.Adaptador.in;
 
 public class UsuarioRequest {
+    private Long id;
     private String nombre;
     private String correo;
 
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public String getNombre() {
         return nombre;
     }

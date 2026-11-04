@@ -6,7 +6,8 @@ import com.example.Hexagonal.Dominio.Modelo.Usuario;
 
 public interface UsuarioRepositoryPort{
     Usuario guardar(Usuario usuario);
-    Usuario buscarPorId(String id);
+    Usuario buscarPorId(Long id);
+    Usuario actualizar(Usuario usuario);
     List<Usuario> listarTodos();
     void eliminar(Long id);
 

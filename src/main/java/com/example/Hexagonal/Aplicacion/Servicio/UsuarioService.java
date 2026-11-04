@@ -19,8 +19,13 @@ public class UsuarioService implements UsuarioUseCase {
     }
 
     @Override
-    public Usuario obtenerUsuario(String id) {
+    public Usuario obtenerUsuario(Long id) {
         return usuarioRepository.buscarPorId(id);
+    }
+
+    @Override
+    public Usuario actualizarUsuario(Long id, String nombre, String correo) {
+        return usuarioRepository.actualizar(new Usuario(id, nombre, correo));
     }
 
     @Override
@@ -29,8 +34,8 @@ public class UsuarioService implements UsuarioUseCase {
     }
 
     @Override
-    public void eliminarUsuario(String id) {
-        usuarioRepository.eliminar(Long.valueOf(id));
+    public void eliminarUsuario(Long id) {
+        usuarioRepository.eliminar(id);
     }
 
 

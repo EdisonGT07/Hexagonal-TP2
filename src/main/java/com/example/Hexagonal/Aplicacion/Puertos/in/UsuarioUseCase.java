@@ -5,7 +5,8 @@ import java.util.List;
 
 public interface UsuarioUseCase {
     Usuario registrar(String nombre, String correo);
-    Usuario obtenerUsuario(String id);
+    Usuario obtenerUsuario(Long id);
+    Usuario actualizarUsuario(Long id, String nombre, String correo);
     List<Usuario> listarUsuarios();
-    void eliminarUsuario(String id);
+    void eliminarUsuario(Long id);
 }

@@ -23,10 +23,21 @@ public class UsuarioAdapter implements UsuarioRepositoryPort {
     }
 
     @Override
-    public Usuario buscarPorId(String id) {
-        Long usuarioId = Long.parseLong(id);
-        return usuarioRepository.findById(usuarioId)
+    public Usuario buscarPorId(Long id) {
+        return usuarioRepository.findById(id)
                 .map(entity -> new Usuario(entity.getId(), entity.getNombre(), entity.getCorreo()))
+                .orElse(null);
+    }
+
+    @Override
+    public Usuario actualizar(Usuario usuario) {
+        return usuarioRepository.findById(usuario.getId())
+                .map(entity -> {
+                    entity.setNombre(usuario.getNombre());
+                    entity.setCorreo(usuario.getCorreo());
+                    UsuarioEntity actualizado = usuarioRepository.save(entity);
+                    return new Usuario(actualizado.getId(), actualizado.getNombre(), actualizado.getCorreo());
+                })
                 .orElse(null);
     }
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f4f7fb">
     <title>Usuarios | Hexagonal</title>
-    <link rel="stylesheet" th:href="@{/estilos.css}">
+    <link rel="stylesheet" th:href="@{/estilos.css(v=2)}">
 </head>
 <body>
     <main class="page-shell">
@@ -49,13 +49,15 @@
             <section class="panel">
                 <div class="panel-heading">
                     <div>
-                        <p class="eyebrow">NUEVO REGISTRO</p>
-                        <h2>Agregar usuario</h2>
+                        <p class="eyebrow" th:text="${usuarioRequest.id == null ? 'NUEVO REGISTRO' : 'ACTUALIZAR REGISTRO'}">NUEVO REGISTRO</p>
+                        <h2 th:text="${usuarioRequest.id == null ? 'Agregar usuario' : 'Editar usuario'}">Agregar usuario</h2>
                     </div>
-                    <span class="panel-icon" aria-hidden="true">+</span>
+                    <span class="panel-icon" aria-hidden="true" th:text="${usuarioRequest.id == null ? '+' : '✎'}">+</span>
                 </div>
 
-                <form th:action="@{/usuarios/registrar}" th:object="${usuarioRequest}" method="post">
+                <form th:action="${usuarioRequest.id == null} ? @{/usuarios/registrar} : @{/usuarios/actualizar}"
+                      th:object="${usuarioRequest}" method="post">
+                    <input th:if="${usuarioRequest.id != null}" type="hidden" th:field="*{id}">
                     <div class="form-group">
                         <label for="nombre">Nombre completo</label>
                         <input type="text" id="nombre" th:field="*{nombre}" placeholder="Ej. Juan Pérez" autocomplete="name" required>
@@ -66,7 +68,10 @@
                         <input type="email" id="correo" th:field="*{correo}" placeholder="Ej. juan@correo.com" autocomplete="email" required>
                     </div>
 
-                    <button class="button button-primary button-full" type="submit">Guardar usuario <span aria-hidden="true">→</span></button>
+                    <button class="button button-primary button-full" type="submit"
+                            th:text="${usuarioRequest.id == null ? 'Guardar usuario →' : 'Guardar cambios →'}">Guardar usuario →</button>
+                    <a th:if="${usuarioRequest.id != null}" class="button button-secondary button-full cancel-edit"
+                       th:href="@{/usuarios/nuevo}">Cancelar edición</a>
                 </form>
 
                 <div class="divider"><span>o consulta un registro</span></div>
@@ -96,10 +101,13 @@
                         <p class="result-name" th:text="${usuarioEncontrado.nombre}"></p>
                         <p class="result-email" th:text="${usuarioEncontrado.correo}"></p>
                     </div>
-                    <form th:action="@{/usuarios/eliminar}" method="post">
-                        <input type="hidden" name="id" th:value="${usuarioEncontrado.id}">
-                        <button class="button button-danger button-small" type="submit">Eliminar</button>
-                    </form>
+                    <div class="row-actions">
+                        <a class="button button-secondary button-small" th:href="@{/usuarios/editar(id=${usuarioEncontrado.id})}">Editar</a>
+                        <form th:action="@{/usuarios/eliminar}" method="post" onsubmit="return confirm('¿Eliminar este usuario? Esta acción no se puede deshacer.');">
+                            <input type="hidden" name="id" th:value="${usuarioEncontrado.id}">
+                            <button class="button button-danger button-small" type="submit">Eliminar</button>
+                        </form>
+                    </div>
                 </section>
 
                 <div th:if="${!#lists.isEmpty(usuarios)}" class="table-wrap">
@@ -123,10 +131,17 @@
                                 <td class="email-cell" th:text="${usuario.correo}"></td>
                                 <td><span class="id-badge" th:text="${usuario.id}"></span></td>
                                 <td class="action-cell">
-                                    <form th:action="@{/usuarios/eliminar}" method="post">
-                                        <input type="hidden" name="id" th:value="${usuario.id}">
-                                        <button class="button button-danger button-small" type="submit" th:aria-label="|Eliminar a ${usuario.nombre}|">Eliminar</button>
-                                    </form>
+                                    <div class="row-actions">
+                                        <a class="button button-secondary button-small"
+                                           th:href="@{/usuarios/editar(id=${usuario.id})}"
+                                           th:aria-label="|Editar a ${usuario.nombre}|">Editar</a>
+                                        <form th:action="@{/usuarios/eliminar}" method="post"
+                                              onsubmit="return confirm('¿Eliminar este usuario? Esta acción no se puede deshacer.');">
+                                            <input type="hidden" name="id" th:value="${usuario.id}">
+                                            <button class="button button-danger button-small" type="submit"
+                                                    th:aria-label="|Eliminar a ${usuario.nombre}|">Eliminar</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

@@ -327,6 +327,11 @@ input:focus {
     background: #f8fafc;
 }
 
+.cancel-edit {
+    margin-top: 9px;
+    text-decoration: none;
+}
+
 .button-danger {
     border-color: #f0d7d7;
     background: #fff;
@@ -470,8 +475,15 @@ tbody tr:last-child td {
     text-align: right;
 }
 
-.action-cell form {
-    display: inline;
+.row-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+}
+
+.row-actions form {
+    margin: 0;
 }
 
 .search-result {
